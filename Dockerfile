@@ -25,4 +25,4 @@ COPY . ./
 
 # Run the web service on container startup.
 # DEVELOPMENT
-# CMD [ "npm", "run", "dev" ]
+CMD [ "npm", "run", "start" ]
