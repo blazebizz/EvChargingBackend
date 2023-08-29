@@ -15,6 +15,13 @@ router.get('/', function (req, res, next) {
  * @apiBody {String} [userId]
  * @apiBody {Object} [onboardData]
  *
+ * @apiSuccessExample {json} Success-Response:
+ * 
+ * HTTP/1.1 200 OK
+ * {
+ *   status: 1,
+ *   message: "partner onboard success"
+ * }
  */
 
 router.post('/onboard', partnerOnboardCtrl.partnerOnboard);
