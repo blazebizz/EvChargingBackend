@@ -1,7 +1,8 @@
+
 exports.pg_config = {
-    user: "",
-    database: "",
-    port: "",
-    host: "",
-    password: ""
+    user: "postgres",
+    database: "postgres",
+    port: 5432,
+    host: "db.tecwsodqrfjplkxqrgti.supabase.co",
+    password: "8pRT2onRm8OsMPXS"
 }
