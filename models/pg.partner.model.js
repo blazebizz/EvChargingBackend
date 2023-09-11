@@ -85,3 +85,25 @@ exports.updateUserStatus = (userId, status, updated_at, remark, reject_list) => 
     })
 
 }
+
+
+exports.updateUserOnboardData = (userId, onboardData, updated_at) => {
+
+    return new Promise(async (resolve, reject) => {
+
+        try {
+            let dataList = await pgclient(pgTables.partnerOnboard)
+                .where({ userId })
+                .update({ onboardData, updated_at })
+
+            return resolve(responseDeliver(200, "Partner data updated successfully", "", dataList))
+
+        } catch (error) {
+            return reject(responseDeliver(400, "error on update partner status", error))
+
+        }
+
+
+    })
+
+}

@@ -12,7 +12,9 @@ exports.error_code_wise_status = {
 
 
 exports.responseDeliver = (error_code, message, error = "", data = []) => {
+    data = Array.isArray(data) ? data : [data]
+
     let response = { status: this.error_code_wise_status[error_code], message, data }
-    console.log("response_logger ==> ", response, "error==>", error);
+    console.log("response_logger ==> ", { ...response, error });
     return response
 }

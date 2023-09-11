@@ -7,12 +7,29 @@ exports.partnerOnboard = (req, res) => {
     let { userId, onboardData } = req.body
     let updated_at = moment().tz("Asia/Kolkata").format("yyyy-MM-DD hh:mm:sZ")
 
-    pgPartnerModel.insertPartnerData(onboardData, userId, updated_at, "PENDING").then(insertSuccessResp => {
-        res.status(200).json({ status: 1, message: "partner onboard success" })
-    }).catch(err => {
+    pgPartnerModel.fetchUserData(userId).then(partnerList => {
+        if (partnerList.data.length > 0) {
 
-        res.status(400).json({ status: 0, message: "partner onboard faild" })
+            let new_key = Object.keys(onboardData)
+            partnerList.data[0].onboardData[new_key[0]] = onboardData[new_key[0]]
 
+            pgPartnerModel.updateUserOnboardData(userId, partnerList.data[0].onboardData, updated_at).then(insertSuccessResp => {
+                res.status(200).json({ status: 1, message: "partner onboard success" })
+            }).catch(err => {
+
+                res.status(400).json({ status: 0, message: "partner onboard faild" })
+
+            })
+        } else {
+            pgPartnerModel.insertPartnerData(onboardData, userId, updated_at, "PENDING").then(insertSuccessResp => {
+                res.status(200).json({ status: 1, message: "partner onboard success" })
+            }).catch(err => {
+
+                res.status(400).json({ status: 0, message: "partner onboard faild" })
+
+            })
+
+        }
     })
 }
 
@@ -64,7 +81,7 @@ exports.updatePartnersStatus = async (req, res) => {
 
 exports.fetchPartnerData = async (req, res) => {
     const { userId } = req.body
-  
+
     pgPartnerModel.fetchUserData(userId).then(partnerData => {
         res.status(200).json(partnerData)
     }).catch(err => {
