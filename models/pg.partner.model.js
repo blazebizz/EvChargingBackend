@@ -107,3 +107,26 @@ exports.updateUserOnboardData = (userId, onboardData, updated_at) => {
     })
 
 }
+
+
+exports.insertUserData = (userId, name, mobileNo) => {
+
+    return new Promise(async (resolve, reject) => {
+
+        try {
+            console.log("table name :", pgTables.createUser);
+            console.log("data", userId, name, mobileNo);
+            let created_At = moment().tz("Asia/Kolkata").format("yyyy-MM-DD hh:mm:sZ")
+          let ok=  await pgclient(pgTables.createUser)
+                .insert({ userId, name, mobileNo, created_At })
+
+            // return resolve(responseDeliver(200, "Partner data saved successfully", ""))
+
+        } catch (error) {
+            // return reject(responseDeliver(400, "error on insert partner data", error))
+        }
+
+
+    })
+
+}

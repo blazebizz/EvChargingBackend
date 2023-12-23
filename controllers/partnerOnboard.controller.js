@@ -3,7 +3,6 @@ const pgPartnerModel = require("../models/pg.partner.model")
 const { responseDeliver } = require("../services/static.service")
 
 exports.partnerOnboard = (req, res) => {
-
     let { userId, onboardData } = req.body
     let updated_at = moment().tz("Asia/Kolkata").format("yyyy-MM-DD hh:mm:sZ")
 
