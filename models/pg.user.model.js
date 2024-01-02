@@ -53,3 +53,25 @@ exports.fetchUserData = (userId) => {
     })
 
 }
+
+
+
+exports.fetchDataUserDashboard = () => {
+
+    return new Promise(async (resolve, reject) => {
+
+        try {
+            let dataList = await pgclient.from('chargingStationDetails').select('stationId', 'stationName', 'rating', 'ratingCount', 'latitude', 'longitude', 'desc');
+            // console.log("dataList ::==> ", dataList);
+            return resolve(responseDeliver(200, "Dashboard Data Fetched successfully ", "", dataList))
+
+        } catch (error) {
+            return reject(responseDeliver(400, "error While Fetching Dashboard data", error))
+
+        }
+
+
+    })
+
+}
+

@@ -13,6 +13,7 @@ var indexRouter = require('./routes/index');
 var partnerRouter = require('./routes/partner.router');
 var authorizationRouter = require('./routes/authorization.router');
 var generateToken = require('./routes/tokenRoute');
+var userDashboard = require('./routes/userDashboard')
 const { requestLogger } = require('./services/validator.service');
 
 var app = express();
@@ -42,6 +43,7 @@ app.use(root_point_v1 + '/', indexRouter);
 app.use(root_point_v1 + '/auth', authorizationRouter);
 app.use(root_point_v1 + '/partner', partnerRouter);
 app.use(root_point_v1 + '/',generateToken);
+app.use(root_point_v1 + '/',userDashboard);
 // app.use(root_point_v1 + '/',generateToken);
 
 module.exports = app;
