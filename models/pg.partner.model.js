@@ -3,13 +3,46 @@ const { pgclient } = require("../cred/pg.connection");
 const { responseDeliver } = require("../services/static.service");
 // const KNIX = require("knex")
 
-exports.insertPartnerData = (onboardData, userId, updated_at, status) => {
+exports.insertPartnerData = (reqData,updated_at) => {
+    console.log("REQDATA :",reqData);
+    let { userId,partnerId,city,name,
+        state,
+        mobileNo,
+        pinCode,
+        address1,
+        address2,
+        twoWheeler,
+        fourWheeler,
+        panNo,
+        adharNo,
+        ebillNo,
+        electricProvider,
+        remark,
+        bankDetails,
+        parkingImage,
+        documentImage}=reqData
 
     return new Promise(async (resolve, reject) => {
 
         try {
+    
             await pgclient(pgTables.partnerOnboard)
-                .insert({ userId, onboardData, updated_at, status })
+                .insert({userId,partnerId,city,name,
+                    state,
+                    mobileNo,
+                    pinCode,
+                    address1,
+                    address2,
+                    twoWheeler,
+                    fourWheeler,
+                    panNo,
+                    adharNo,
+                    ebillNo,
+                    electricProvider,
+                    remark,
+                    bankDetails,
+                    parkingImage,
+                    documentImage,updated_at})
 
             return resolve(responseDeliver(200, "Partner data saved successfully", ""))
 
@@ -46,6 +79,9 @@ exports.fetchUserDataDateStatusWise = (status, start_date, end_date) => {
 }
 
 exports.fetchUserData = (userId) => {
+    console.log("+++++++++++++++++++++++++++USER ID ",userId);
+    
+    console.log("+++++++++++++++++++++++++++USER ID ",typeof(userId) );
 
     return new Promise(async (resolve, reject) => {
 

@@ -3,24 +3,29 @@ const pgPartnerModel = require("../models/pg.partner.model")
 const { responseDeliver } = require("../services/static.service")
 
 exports.partnerOnboard = (req, res) => {
-    let { userId, onboardData } = req.body
+    let reqData = req.body
+    console.log("REcieved onboarding request :",reqData);
+
     let updated_at = moment().tz("Asia/Kolkata").format("yyyy-MM-DD hh:mm:sZ")
 
-    pgPartnerModel.fetchUserData(userId).then(partnerList => {
+    pgPartnerModel.fetchUserData(req.body.userId).then(partnerList => {
         if (partnerList.data.length > 0) {
 
-            let new_key = Object.keys(onboardData)
-            partnerList.data[0].onboardData[new_key[0]] = onboardData[new_key[0]]
+            // let new_key = Object.keys(onboardData)
+            // partnerList.data[0].onboardData[new_key[0]] = onboardData[new_key[0]]
 
-            pgPartnerModel.updateUserOnboardData(userId, partnerList.data[0].onboardData, updated_at).then(insertSuccessResp => {
-                res.status(200).json({ status: 1, message: "partner onboard success" })
-            }).catch(err => {
+            res.status(200).json({ status: 1, message: "partner already onboarded" })
 
-                res.status(400).json({ status: 0, message: "partner onboard faild" })
+            // pgPartnerModel.updateUserOnboardData(userId, partnerList.data[0].onboardData, updated_at).then(insertSuccessResp => {
+            //     // res.status(200).json({ status: 1, message: "partner onboard success" })
+            // }).catch(err => {
 
-            })
+            //     res.status(400).json({ status: 0, message: "partner onboard faild" })
+
+            // })
         } else {
-            pgPartnerModel.insertPartnerData(onboardData, userId, updated_at, "PENDING").then(insertSuccessResp => {
+            console.log("Inserting partner data ");
+            pgPartnerModel.insertPartnerData(reqData,updated_at).then(insertSuccessResp => {
                 res.status(200).json({ status: 1, message: "partner onboard success" })
             }).catch(err => {
 
