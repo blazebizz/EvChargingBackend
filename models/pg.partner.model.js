@@ -1,11 +1,13 @@
 const { pgTables } = require("../cred/env");
-const { pgclient } = require("../cred/pg.connection");
+const { pgClient } = require("../cred/pg.connection");
 const { responseDeliver } = require("../services/static.service");
-// const KNIX = require("knex")
 
 exports.insertPartnerData = (reqData,updated_at) => {
     console.log("REQDATA :",reqData);
-    let { userId,partnerId,city,name,
+    let { userId,
+        partnerId,
+        city,
+        name,
         state,
         mobileNo,
         pinCode,
@@ -20,13 +22,14 @@ exports.insertPartnerData = (reqData,updated_at) => {
         remark,
         bankDetails,
         parkingImage,
-        documentImage}=reqData
+        documentImage
+    }=reqData
 
     return new Promise(async (resolve, reject) => {
 
         try {
     
-            await pgclient(pgTables.partnerOnboard)
+            await pgClient(pgTables.partnerOnboard)
                 .insert({userId,partnerId,city,name,
                     state,
                     mobileNo,
@@ -48,10 +51,7 @@ exports.insertPartnerData = (reqData,updated_at) => {
 
         } catch (error) {
             return reject(responseDeliver(400, "error on insert partner data", error))
-
         }
-
-
     })
 
 }
@@ -61,7 +61,7 @@ exports.fetchUserDataDateStatusWise = (status, start_date, end_date) => {
     return new Promise(async (resolve, reject) => {
 
         try {
-            let dataList = await pgclient(pgTables.partnerOnboard)
+            let dataList = await pgClient(pgTables.partnerOnboard)
                 .where({ status })
                 .where('updated_at', '>=', start_date)
                 .where('updated_at', '<=', end_date)
@@ -86,7 +86,7 @@ exports.fetchUserData = (userId) => {
     return new Promise(async (resolve, reject) => {
 
         try {
-            let dataList = await pgclient(pgTables.partnerOnboard)
+            let dataList = await pgClient(pgTables.partnerOnboard)
                 .where({ userId })
 
             return resolve(responseDeliver(200, "Partner data fetched successfully", "", dataList))
@@ -106,7 +106,7 @@ exports.updateUserStatus = (userId, status, updated_at, remark, reject_list) => 
     return new Promise(async (resolve, reject) => {
 
         try {
-            let dataList = await pgclient(pgTables.partnerOnboard)
+            let dataList = await pgClient(pgTables.partnerOnboard)
                 .where({ userId })
                 .update({ status, updated_at, remark, reject_list })
 
@@ -114,12 +114,8 @@ exports.updateUserStatus = (userId, status, updated_at, remark, reject_list) => 
 
         } catch (error) {
             return reject(responseDeliver(400, "error on update partner status", error))
-
         }
-
-
     })
-
 }
 
 
@@ -128,7 +124,7 @@ exports.updateUserOnboardData = (userId, onboardData, updated_at) => {
     return new Promise(async (resolve, reject) => {
 
         try {
-            let dataList = await pgclient(pgTables.partnerOnboard)
+            let dataList = await pgClient(pgTables.partnerOnboard)
                 .where({ userId })
                 .update({ onboardData, updated_at })
 
@@ -153,7 +149,7 @@ exports.insertUserData = (userId, name, mobileNo) => {
             console.log("table name :", pgTables.createUser);
             console.log("data", userId, name, mobileNo);
             let created_At = moment().tz("Asia/Kolkata").format("yyyy-MM-DD hh:mm:sZ")
-          let ok=  await pgclient(pgTables.createUser)
+          let ok=  await pgClient(pgTables.createUser)
                 .insert({ userId, name, mobileNo, created_At })
 
             // return resolve(responseDeliver(200, "Partner data saved successfully", ""))

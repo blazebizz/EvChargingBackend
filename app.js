@@ -1,22 +1,23 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var cors = require("cors");
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const cors = require("cors");
 
-var admin = require("firebase-admin");
+const admin = require("firebase-admin");
 const { firestore_config } = require('./cred/env');
 
 
 
-var indexRouter = require('./routes/index');
-var partnerRouter = require('./routes/partner.router');
-var authorizationRouter = require('./routes/authorization.router');
-var generateToken = require('./routes/tokenRoute');
-var userDashboard = require('./routes/userDashboard')
-const { requestLogger } = require('./services/validator.service');
+const indexRouter = require('./routes/index');
+const partnerRouter = require('./routes/partner.router');
+const authorizationRouter = require('./routes/authorization.router');
+const generateToken = require('./routes/token.route');
+const userDashboard = require('./routes/userDashboard')
+// const { requestLogger } = require('./services/validator.service');
+const chargingStation = require('./routes/charging_station.router');
 
-var app = express();
+const app = express();
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -28,7 +29,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 // var serviceAccount = firestore_config;
-
 admin.initializeApp({
     credential: admin.credential.cert(firestore_config),
     // databaseURL: env.firebaseSetup.db
@@ -44,6 +44,6 @@ app.use(root_point_v1 + '/auth', authorizationRouter);
 app.use(root_point_v1 + '/partner', partnerRouter);
 app.use(root_point_v1 + '/',generateToken);
 app.use(root_point_v1 + '/',userDashboard);
-// app.use(root_point_v1 + '/',generateToken);
+app.use(root_point_v1 + '/',chargingStation);
 
 module.exports = app;

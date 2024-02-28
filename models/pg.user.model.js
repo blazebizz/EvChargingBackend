@@ -1,5 +1,5 @@
 const { pgTables } = require("../cred/env");
-const { pgclient } = require("../cred/pg.connection");
+const { pgClient } = require("../cred/pg.connection");
 const { responseDeliver } = require("../services/static.service");
 const moment = require("moment-timezone");
 
@@ -15,7 +15,7 @@ exports.insertUserData = (userId, mobileno, name) => {
       let created_at = moment()
         .tz("Asia/Kolkata")
         .format("yyyy-MM-DD hh:mm:sZ");
-      await pgclient("userData").insert({
+      await pgClient("userData").insert({
         userId: userId,
         name: name,
         mobileno: mobileno,
@@ -34,7 +34,7 @@ exports.insertUserData = (userId, mobileno, name) => {
 exports.fetchUserData = (userId) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let dataList = await pgclient(pgTables.createUser).where({ userId });
+      let dataList = await pgClient(pgTables.createUser).where({ userId });
 
       return resolve(
         responseDeliver(200, "Partner data fetched successfully", "", dataList)
@@ -48,7 +48,7 @@ exports.fetchUserData = (userId) => {
 exports.fetchDataUserDashboard = () => {
   return new Promise(async (resolve, reject) => {
     try {
-      let dataList = await pgclient
+      let dataList = await pgClient
         .from("chargingStationDetails")
         .select(
           "stationId",
@@ -78,7 +78,7 @@ exports.fetchDataUserDashboard = () => {
 exports.stationDetails = (stationId) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let dataList = await pgclient
+      let dataList = await pgClient
         .from("chargingStationDetails")
         // .select('stationId', 'stationName', 'rating', 'ratingCount', 'latitude', 'longitude', 'desc');
         .where({ stationId });
@@ -142,7 +142,7 @@ exports.updateSlots = (stationData, bookedFor) => {
         avlSlotsBike,
         avlSlotsCar
       );
-      let update = await pgclient
+      let update = await pgClient
         .from("chargingStationDetails")
         .where({ stationId })
         .update({ avlSlotsBike, avlSlotsCar });
@@ -169,7 +169,7 @@ exports.InsertBooking = (
       // let created_at = moment()
       //   .tz("Asia/Kolkata")
       //   .format("yyyy-MM-DD hh:mm:sZ");
-      await pgclient("bookingdetails").insert({
+      await pgClient("bookingdetails").insert({
         bookingid,
         userId,
         stationId,

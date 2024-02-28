@@ -9,12 +9,14 @@ exports.pg_config = environmentSetup.pg_config
 exports.firebase_sdk_cred = environmentSetup.firebase_sdk_cred
 
 exports.collections = {
-    partnerOnboard: 'partnerOnboard'
+    partnerOnboard: 'partnerOnboard',
+    chargingStationCollection:'rajChargingStationDetails'
 }
 
 exports.pgTables = {
     partnerOnboard: 'partnerOnboard',
-    createUser: 'userData'
+    createUser: 'userData',
+    chargingStationTable:'rajChargingStationDetails'
 }
 
 

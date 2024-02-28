@@ -1,8 +1,6 @@
-const pg = require("pg");
-
 const { pg_config } = require("./env");
 
-// const pgclient = new pg.Pool({
+// const pgClient = new pg.Pool({
 //     user: pg_config.user,
 //     database: pg_config.database,
 //     port: pg_config.port,
@@ -10,7 +8,7 @@ const { pg_config } = require("./env");
 //     password: pg_config.password
 // });
 
-const pgclient = require('knex')({
+const _pgClient = require('knex')({
     client: 'pg',
     connection: {
         // connectionString: config.DATABASE_URL,
@@ -23,4 +21,12 @@ const pgclient = require('knex')({
     debug: true
 });
 
-exports.pgclient = pgclient;
+_pgClient.on('connect', (data => {
+    console.log("connection-->", data)
+}))
+
+_pgClient.on('error', (err => {
+    console.log("connection-->", err)
+}))
+
+exports.pgClient = _pgClient;
