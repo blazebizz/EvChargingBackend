@@ -3,5 +3,6 @@ const generateTokenController = require('../controllers/charging_station.control
 const router = express.Router();
 
 router.post('/charging-station', generateTokenController.directCreateChargingStation);
+router.get('/charging-station', generateTokenController.directCreateChargingStation);
 
 module.exports = router;

@@ -4,7 +4,7 @@ const {responseDeliver} = require("../services/static.service");
 
 
 exports.directCreateChargingStation = (reqData) => {
-    console.log("REQDATA :", reqData);
+    console.log("REQ DATA :", reqData);
     let {
         partner_id,
         lat,
