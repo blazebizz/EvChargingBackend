@@ -10,9 +10,9 @@ const { firestore_config } = require('./cred/env');
 
 
 const indexRouter = require('./routes/index');
-const partnerRouter = require('./routes/partner.router');
+const partnerRouter = require('./routes/partner/partner.router');
 const authorizationRouter = require('./routes/authorization.router');
-const generateToken = require('./routes/token.route');
+const generateToken = require('./routes/token/token.route');
 const userDashboard = require('./routes/userDashboard')
 // const { requestLogger } = require('./services/validator.service');
 const chargingStation = require('./routes/charging_station.router');

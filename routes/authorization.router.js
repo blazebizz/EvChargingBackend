@@ -1,6 +1,6 @@
 var express = require('express');
 const authCtrl = require('../controllers/auth.controller');
-const partnerOnboardCtrl = require('../controllers/partnerOnboard.controller');
+const partnerOnboardCtrl = require('../controllers/partner/partner.controller');
 var router = express.Router();
 
 

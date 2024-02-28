@@ -3,47 +3,54 @@ const { pgClient } = require("../cred/pg.connection");
 const { responseDeliver } = require("../services/static.service");
 const moment = require("moment-timezone");
 
-exports.insertUserData = (userId, mobileno, name) => {
+/*
+exports.insertUserData = (userId, mobileNo, name) => {
   return new Promise(async (resolve, reject) => {
     try {
-      console.log("table name :", pgTables.createUser);
-      console.log("data", userId, name, mobileno);
+      console.log("table name :", pgTables.userData);
+      console.log("data", userId, name, mobileNo);
       console.log("type of userId", typeof userId);
       console.log("type of name", typeof name);
-      console.log("type of mobileno", typeof mobileno);
+      console.log("type of mobileNo", typeof mobileNo);
 
       let created_at = moment()
         .tz("Asia/Kolkata")
         .format("yyyy-MM-DD hh:mm:sZ");
+
       await pgClient("userData").insert({
         userId: userId,
         name: name,
-        mobileno: mobileno,
+        mobileNo: mobileNo,
       });
 
       console.log("inserted successfully");
 
-      return resolve({ status: 1, message: "Data Inserted " });
+      return resolve(
+          responseDeliver(200, "Data Inserted", "")
+      );
     } catch (error) {
       console.log("Error While Inserting data in  db ");
-      return reject({ status: 0, message: "Error while inserting data" });
+      return reject(responseDeliver(400, "Error while inserting data", error));
     }
   });
 };
+*/
 
+/*
 exports.fetchUserData = (userId) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let dataList = await pgClient(pgTables.createUser).where({ userId });
+      let dataList = await pgClient(pgTables.userData).where({ userId });
 
       return resolve(
-        responseDeliver(200, "Partner data fetched successfully", "", dataList)
+        responseDeliver(200, "User data fetched successfully", "", dataList)
       );
     } catch (error) {
       return reject(responseDeliver(400, "error on fetch partner data", error));
     }
   });
 };
+*/
 
 exports.fetchDataUserDashboard = () => {
   return new Promise(async (resolve, reject) => {

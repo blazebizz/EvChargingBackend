@@ -28,7 +28,6 @@ exports.directCreateChargingStation = (req, res) => {
         }
     }).catch(() => {
         res.status(400).json({status: 0, message: "Something Went wrong,Please try again"})
-
     })
 
 }

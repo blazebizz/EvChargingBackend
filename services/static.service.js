@@ -10,11 +10,24 @@ exports.error_code_wise_status = {
     200: 1
 }
 
+exports.response = {
+    SUCCESS:1,
+    FAIL:0,
+    INTERNAL_ERROR:-1
 
-exports.responseDeliver = (error_code, message, error = "", data = []) => {
+}
+
+
+exports.responseDeliver = (code, message, error = "", data = []) => {
     data = Array.isArray(data) ? data : [data]
+    let response = { status: code, message, data }
+    console.log("response_logger ==> ", { ...response, error });
+    return response
+}
 
-    let response = { status: this.error_code_wise_status[error_code], message, data }
+exports.responseDeliver = (code, message, data = [],error="") => {
+    data = Array.isArray(data) ? data : [data]
+    let response = { status: code, message, data }
     console.log("response_logger ==> ", { ...response, error });
     return response
 }

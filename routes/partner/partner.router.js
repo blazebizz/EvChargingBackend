@@ -1,5 +1,5 @@
 var express = require('express');
-const partnerOnboardCtrl = require('../controllers/partnerOnboard.controller');
+const partnerOnboardCtrl = require('../../controllers/partner/partner.controller');
 var router = express.Router();
 
 /* GET users listing. */

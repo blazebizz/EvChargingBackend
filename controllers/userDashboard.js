@@ -1,6 +1,6 @@
 const moment = require("moment-timezone");
 const pgUserModel = require("../models/pg.user.model");
-const pgPartnerModel = require("../models/pg.partner.model");
+const pgPartnerModel = require("../models/partner/partner.model");
 const { responseDeliver } = require("../services/static.service");
 const jwt = require("jsonwebtoken");
 const { use } = require("../routes");

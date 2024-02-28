@@ -10,13 +10,14 @@ exports.firebase_sdk_cred = environmentSetup.firebase_sdk_cred
 
 exports.collections = {
     partnerOnboard: 'partnerOnboard',
-    chargingStationCollection:'rajChargingStationDetails'
+    chargingStationCollection:'rajChargingStation'
 }
 
 exports.pgTables = {
     partnerOnboard: 'partnerOnboard',
-    createUser: 'userData',
-    chargingStationTable:'rajChargingStationDetails'
+    userData: 'userData',
+    chargingStationTable:'rajChargingStation',
+    partner:'rajPartner'
 }
 
 
