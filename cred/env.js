@@ -16,7 +16,7 @@ exports.collections = {
 exports.pgTables = {
     partnerOnboard: 'partnerOnboard',
     userData: 'userData',
-    chargingStationTable:'rajChargingStation',
+    chargingStation:'rajChargingStation',
     partner:'rajPartner'
 }
 
