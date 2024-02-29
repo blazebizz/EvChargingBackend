@@ -1,13 +1,13 @@
 const tokenModel = require("../../models/token/token.model")
 const jwt = require('jsonwebtoken');
-const {response} = require("../../services/static.service");
+const {responseCode} = require("../../services/static.service");
 
 exports.generateToken = (req, res) => {
     let { userId } = req.body
     tokenModel.fetchUser(userId).then((userData) => {
         if (userData.data.length === 0) {
             console.log("Invalid user ID :", userId)
-            res.status(400).json({ status: response.FAIL, message: "Invalid User ID" })
+            res.status(400).json({ status: responseCode.FAIL, message: "Invalid User ID" })
         } else if (userData.data.length === 1) {
             const tokens = jwt.sign({ userId }, 'my-key', { expiresIn: '20m' });
             console.log(`TokenGenerated : ${userId} ==> Token : ${tokens}`);
@@ -18,10 +18,10 @@ exports.generateToken = (req, res) => {
                 userType: userData.data[0].userType
             }
             console.log("response to send==> ", resp)
-            res.status(200).json({ status: response.SUCCESS, data: resp })
+            res.status(200).json({ status: responseCode.SUCCESS, data: resp })
         } else {
             console.log("Something went wrong ")
-            res.status(400).json({ status: response.FAIL, message: "Something went wrong " })
+            res.status(400).json({ status: responseCode.FAIL, message: "Something went wrong " })
         }
     })
 }
@@ -43,14 +43,14 @@ exports.createUser = (req, res) => {
                 userType: "customer"
             }
             console.log("response to send==> ", resp)
-            res.status(200).json({ status: response.SUCCESS, data: resp })
+            res.status(200).json({ status: responseCode.SUCCESS, data: resp })
 
         } else {
             console.log("Error while Inserting data , UserID : ", userId)
-            res.status(400).json({ status: response.FAIL, message: "Something Went wrong,Please try again" })
+            res.status(400).json({ status: responseCode.FAIL, message: "Something Went wrong,Please try again" })
         }
     }).catch(() => {
-        res.status(400).json({ status: response.FAIL, message: "Something Went wrong,Please try again" })
+        res.status(400).json({ status: responseCode.FAIL, message: "Something Went wrong,Please try again" })
     })
 
 }

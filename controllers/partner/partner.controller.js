@@ -1,6 +1,6 @@
 const moment = require("moment-timezone")
 const onboardModel = require("../../models/partner/partner.model")
-const { responseDeliver, response} = require("../../services/static.service")
+const { responseDeliver, responseCode} = require("../../services/static.service")
 
 exports.partnerOnboard = (req, res) => {
     let reqData = req.body
@@ -15,7 +15,7 @@ exports.partnerOnboard = (req, res) => {
             // let new_key = Object.keys(onboardData)
             // partnerList.data[0].onboardData[new_key[0]] = onboardData[new_key[0]]
 
-            res.status(200).json(responseDeliver(response.SUCCESS,"partner already onboarded !"))
+            res.status(200).json(responseDeliver(responseCode.SUCCESS,"partner already onboarded !"))
 
             // pgPartnerModel.updateUserOnboardData(userId, partnerList.data[0].onboardData, updated_at).then(insertSuccessResp => {
             //     // res.status(200).json({ status: 1, message: "partner onboard success" })
@@ -28,11 +28,11 @@ exports.partnerOnboard = (req, res) => {
             console.log("Inserting partner data ");
             onboardModel.insertPartner(reqData,updated_at).then(insertSuccessResp => {
                 if (insertSuccessResp.code === 1){
-                    res.status(200).json(responseDeliver(response.SUCCESS, "partner onboarded successfully !"))
+                    res.status(200).json(responseDeliver(responseCode.SUCCESS, "partner onboarded successfully !"))
                     // res.status(200).json({ status: response_code.SUCCESS, message: "partner onboard success" })
                 }
             }).catch(() => {
-                res.status(400).json(responseDeliver(response.FAIL,"partner onboard failed !"))
+                res.status(400).json(responseDeliver(responseCode.FAIL,"partner onboard failed !"))
                 // res.status(400).json({ status: response_code.FAIL, message: "partner onboard failed" })
             })
 
@@ -49,10 +49,9 @@ exports.fetchPartnersStatusWiseData = async (req, res) => {
     const endDate = moment(end_date + " 23:59:59+00", "DD-MM-yyyy HH:mm:ss+00").format("yyyy-MM-DD HH:mm:ss+00")
 
     onboardModel.fetchUserDataDateStatusWise(status, startDate, endDate).then(partnerList => {
-        res.status(200).json(responseDeliver(response.SUCCESS,"partner list fetched ","",partnerList))
+        res.status(200).json(responseDeliver(responseCode.SUCCESS,"partner list fetched ","",partnerList))
     }).catch(err => {
         res.status(400).json(err)
-
     })
 }
 
@@ -69,7 +68,7 @@ exports.updatePartnersStatus = async (req, res) => {
                 res.status(400).json(err)
             })
         } else {
-            res.status(400).json(responseDeliver(response.FAIL, "Partner record not found"))
+            res.status(400).json(responseDeliver(responseCode.FAIL, "Partner record not found"))
         }
     }).catch(err => {
         res.status(400).json(err)

@@ -10,7 +10,7 @@ exports.error_code_wise_status = {
     200: 1
 }
 
-exports.response = {
+exports.responseCode = {
     SUCCESS:1,
     FAIL:0,
     INTERNAL_ERROR:-1
@@ -25,9 +25,3 @@ exports.responseDeliver = (code, message, error = "", data = []) => {
     return response
 }
 
-exports.responseDeliver = (code, message, data = [],error="") => {
-    data = Array.isArray(data) ? data : [data]
-    let response = { status: code, message, data }
-    console.log("response_logger ==> ", { ...response, error });
-    return response
-}
