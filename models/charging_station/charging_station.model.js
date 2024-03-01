@@ -149,8 +149,6 @@ exports.getStationByUser=(data)=>{
     let {
         user_id
     }=data
-
-
     return new Promise(async (resolve, reject) => {
         try {
             let result = await pgClient(pgTables.chargingStation)
@@ -162,9 +160,51 @@ exports.getStationByUser=(data)=>{
 
         }catch (e) {
             console.log("getting error --->" + e);
-            return reject(responseDeliver(responseCode.FAIL, "error on getting charging station data", e))
-
+            return reject(responseDeliver(responseCode.FAIL, "error on getting charging station data", e));
         }
-    })
-
+    });
 }
+
+exports.getStationById=(data)=>{
+    console.log("getStationByCode request: ", data);
+    let {
+        station_id
+    }=data
+    return new Promise(async (resolve, reject) => {
+        try {
+            let result = await pgClient(pgTables.chargingStation)
+                .where({station_id})
+
+            console.log("getStationByUser response: ", result);
+
+            return resolve(responseDeliver(responseCode.SUCCESS, "Station Fetch Successfully !", "", result))
+
+        }catch (e) {
+            console.log("getting error --->" + e);
+            return reject(responseDeliver(responseCode.FAIL, "error on getting charging station data", e));
+        }
+    });
+}
+
+
+exports.getStation=(data)=>{
+    console.log("getStationByCode request: ", data);
+    let {
+        lat,
+        long
+    }=data
+
+    return new Promise(async (resolve, reject) => {
+        try {
+            pgClient(pgTables.chargingStation)
+                .select("lat","long","station_name","station_id","des").then(data=>{
+                console.log("getStation response: ", data);
+                return resolve(responseDeliver(responseCode.SUCCESS, "Station Fetch Successfully !", "", data))
+            })
+        }catch (e) {
+            console.log("getting error --->" + e);
+            return reject(responseDeliver(responseCode.FAIL, "error on getting charging station data", e));
+        }
+    });
+}
+
