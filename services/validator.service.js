@@ -23,3 +23,28 @@ exports.requestLogger = (req, res, next) => {
     next()
 };
 
+
+/*// Method to create a UUID of length 7
+exports.createUUID = () => {
+    const currentDate = new Date();
+    const timestamp = currentDate.getTime(); // Get current timestamp
+
+    let randomString = '';
+    while (randomString.length < 7) {
+        const randomChar = Math.floor(Math.random() * 36); // Generate a random number between 0 and 35 (inclusive)
+        if (randomChar < 10) {
+            // If the random number is less than 10, it represents a digit (0-9)
+            randomString += String.fromCharCode(randomChar + 48); // Convert the number to ASCII character code for digits (48-57)
+        } else {
+            // If the random number is 10 or greater, it represents an uppercase letter (A-Z)
+            randomString += String.fromCharCode(randomChar + 55); // Convert the number to ASCII character code for uppercase letters (65-90)
+        }
+    }
+
+    return randomString;
+};*/
+
+
+exports.createUUID=()=> {
+    return Math.random().toString(36).substring(2, 9).toUpperCase();
+}

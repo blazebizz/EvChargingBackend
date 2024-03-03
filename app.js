@@ -15,7 +15,7 @@ const authorizationRouter = require('./routes/authorization.router');
 const generateToken = require('./routes/token/token.route');
 const userDashboard = require('./routes/userDashboard')
 // const { requestLogger } = require('./services/validator.service');
-const chargingStation = require('./routes/charging_station/charging_station.router');
+const chargingStation = require('./routes/station/charging_station.router');
 
 const app = express();
 
