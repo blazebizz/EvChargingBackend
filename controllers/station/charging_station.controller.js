@@ -1,8 +1,6 @@
-const chargingStationModel = require("../../models/charging_station/charging_station.model");
+const chargingStationModel = require("../../models/station/charging_station.model");
 const {responseCode, responseDeliver} = require("../../services/static.service");
-const {v4: uuidv4} = require('uuid');
-const {insertChargingStation} = require("../../models/charging_station/charging_station.model");
-
+const {createUUID} = require("../../services/validator.service")
 
 exports.directCreateChargingStation = (req, res) => {
     let {
@@ -80,6 +78,23 @@ exports.getChargingStationById = (req, res) => {
                 res.status(200).json(responseDeliver(responseCode.SUCCESS, "Station fetched successfully", "", insertSuccessResp.data))
             } else {
                 console.log("Error while fetching data , station_id : ", station_id)
+                res.status(400).json(responseDeliver(responseCode.INTERNAL_ERROR, "Something went wrong, Please try again !"))
+            }
+        }).catch(() => {
+        res.status(400).json(responseDeliver(responseCode.INTERNAL_ERROR, "Something went wrong, Please try again !"))
+    })
+}
+
+
+exports.deleteChargingStationById = (req, res) => {
+    let {station_id} = req.body
+    console.log("req body ", req.body)
+    chargingStationModel.deleteStationById({station_id})
+        .then(response => {
+            if (response.status === 1) {
+                res.status(200).json(responseDeliver(responseCode.SUCCESS, "Station deleted successfully", "", response.data))
+            } else {
+                console.log("Error while deleting data , station_id : ", station_id)
                 res.status(400).json(responseDeliver(responseCode.INTERNAL_ERROR, "Something went wrong, Please try again !"))
             }
         }).catch(() => {
@@ -224,13 +239,12 @@ exports.updateChargingStation = async (req, res) => {
         }
     });
     // Respond with success message
-
 };
 
 // Function to create a UUID of length 7
-function createUUID() {
-    return Math.random().toString(36).substring(2, 9).toUpperCase();
-}
+// function createUUID() {
+//     return Math.random().toString(36).substring(2, 9).toUpperCase();
+// }
 
 
 

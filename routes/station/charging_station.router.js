@@ -1,5 +1,5 @@
 const express = require('express');
-const generateTokenController = require('../../controllers/charging_station/charging_station.controller');
+const generateTokenController = require('../../controllers/station/charging_station.controller');
 const router = express.Router();
 
 router.post('/direct-create-station', generateTokenController.directCreateChargingStation);

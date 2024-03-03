@@ -1,5 +1,3 @@
-
-
 const {pgTables} = require("../../cred/env");
 const {pgClient} = require("../../cred/pg.connection");
 const {responseDeliver, responseCode} = require("../../services/static.service");
@@ -35,7 +33,6 @@ exports.directCreateChargingStation = (reqData) => {
         }
     })
 }
-
 
 exports.insertChargingStation = (data) => {
     console.log("createChargingStation request: ", data);
@@ -186,7 +183,6 @@ exports.getStationById=(data)=>{
     });
 }
 
-
 exports.getStation=(data)=>{
     console.log("getStationByCode request: ", data);
     let {
@@ -199,12 +195,36 @@ exports.getStation=(data)=>{
             pgClient(pgTables.chargingStation)
                 .select("lat","long","station_name","station_id","des").then(data=>{
                 console.log("getStation response: ", data);
-                return resolve(responseDeliver(responseCode.SUCCESS, "Station Fetch Successfully !", "", data))
-            })
+                return resolve(responseDeliver(responseCode.SUCCESS, "Station Fetch Successfully !", "", data));
+            });
         }catch (e) {
             console.log("getting error --->" + e);
             return reject(responseDeliver(responseCode.FAIL, "error on getting charging station data", e));
         }
     });
 }
+
+exports.deleteStationById = (data) => {
+    console.log("deleteStationById request: ", data);
+    let {
+        station_id
+    } = data;
+
+    return new Promise(async (resolve, reject) => {
+        try {
+            // Use Knex.js to delete the station from the database
+            await pgClient(pgTables.chargingStation)
+                .where({ station_id })
+                .del();
+
+            console.log("deleteStationById response: Station deleted successfully");
+
+            return resolve(responseDeliver(responseCode.SUCCESS, "Station deleted successfully", ""));
+        } catch (error) {
+            console.log("Error deleting station: ", error);
+            return reject(responseDeliver(responseCode.FAIL, "Error deleting station", error));
+        }
+    });
+}
+
 
