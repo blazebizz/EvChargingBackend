@@ -228,9 +228,9 @@ exports.updateChargingStation = async (req, res) => {
 };
 
 // Function to create a UUID of length 7
-function createUUID() {
-    return Math.random().toString(36).substring(2, 9).toUpperCase();
-}
+// function createUUID() {
+//     return Math.random().toString(36).substring(2, 9).toUpperCase();
+// }
 
 
 
