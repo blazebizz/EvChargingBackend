@@ -18,7 +18,8 @@ exports.pgTables = {
     userData: 'userData',
     chargingStation:'rajChargingStation',
     partner:'rajPartner',
-    slot:'rajSlot'
+    slot:'rajSlot',
+    users:'rajUsers'
 }
 
 

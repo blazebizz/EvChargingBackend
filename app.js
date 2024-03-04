@@ -36,12 +36,12 @@ admin.initializeApp({
 });
 
 //region handling errors
-app.all("*", (req, res, next) => {
+/*app.all("/!*", (req, res, next) => {
     const err = Error(`Can't find ${req.originalUrl} on the server!`);
     err.status = 'fail';
     err.statusCode = 404;
     next(err);
-});
+});*/
 
 app.use((error, req, res, next) => {
     error.statusCode = error.statusCode || 500;

@@ -10,15 +10,14 @@ exports.getSlotByStationId = (req, res) => {
         if (response.status === responseCode.SUCCESS) {
             res.status(200).json(response);
         } else {
-            console.log("Error while getting data , UserID : ", "userID")
-            res.status(400).json({
-                status: responseCode.FAIL, message: "Something Went wrong,Please try again"
-            });
+            res.status(400).json(response);
         }
     }).catch(error => {
-        res.status(400).json(responseDeliver(responseCode.INTERNAL_ERROR, "Something Went wrong,Please try again", error));
+        res.status(400).json(error);
     })
 }
+
+
 
 exports.getSlotById = (req, res) => {
     let {slot_id} = req.body;
@@ -26,17 +25,13 @@ exports.getSlotById = (req, res) => {
     slotModel.getSlotById({
         slot_id
     }).then(response => {
-        if (response.status === 1) {
-            console.log("get slot by id ====>",response)
+        if (response.status === responseCode.SUCCESS) {
             res.status(200).json(response);
         } else {
-            console.log("Error while getting data , UserID : ", "userID")
-            res.status(400).json({
-                status: responseCode.FAIL, message: "Something Went wrong,Please try again"
-            });
+            res.status(400).json(response);
         }
     }).catch(error => {
-        res.status(400).json(responseDeliver(responseCode.INTERNAL_ERROR, "Something Went wrong,Please try again", error));
+        res.status(400).json(error);
     })
 }
 
@@ -51,12 +46,11 @@ exports.insertSlot = (req, res) => {
         if (response.status === responseCode.SUCCESS) {
             res.status(200).json(response);
         } else {
-            console.log("inserting slot failed");
-            res.status(400).json(responseDeliver(400, "Slot insertion failed"))
+            res.status(400).json(response);
         }
-    }).catch(e => {
-        res.status(400).json(responseDeliver(responseCode.INTERNAL_ERROR, "Something Went wrong,Please try again", e));
-    });
+    }).catch(error => {
+        res.status(400).json(error);
+    })
 }
 
 exports.updateSlot = (req, res) => {
@@ -70,12 +64,11 @@ exports.updateSlot = (req, res) => {
         if (response.status === responseCode.SUCCESS) {
             res.status(200).json(response);
         } else {
-            console.log("updating slot failed");
-            res.status(400).json(responseDeliver(400, "Slot update failed"))
+            res.status(400).json(response);
         }
-    }).catch(e => {
-        res.status(400).json(responseDeliver(responseCode.INTERNAL_ERROR, "Something Went wrong,Please try again", e));
-    });
+    }).catch(error => {
+        res.status(400).json(error);
+    })
 }
 
 exports.deleteSlot = (req, res) => {
@@ -87,10 +80,9 @@ exports.deleteSlot = (req, res) => {
         if (response.status === responseCode.SUCCESS) {
             res.status(200).json(response);
         } else {
-            console.log("inserting slot failed");
-            res.status(400).json(response)
+            res.status(400).json(response);
         }
-    }).catch(e => {
-        res.status(400).json(responseDeliver(responseCode.INTERNAL_ERROR, "Something Went wrong,Please try again", e));
-    });
+    }).catch(error => {
+        res.status(400).json(error);
+    })
 }

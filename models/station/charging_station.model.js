@@ -1,6 +1,6 @@
 const {pgTables} = require("../../cred/env");
 const {pgClient} = require("../../cred/pg.connection");
-const {responseDeliver, responseCode} = require("../../services/static.service");
+const {responseDeliver, responseCode, handelErrorResponse} = require("../../services/static.service");
 
 
 exports.directCreateChargingStation = (reqData) => {
@@ -28,8 +28,10 @@ exports.directCreateChargingStation = (reqData) => {
 
             return resolve(responseDeliver(responseCode.SUCCESS, "Charging station data saved successfully", "", result[0]))
         } catch (error) {
-            console.log("insert error --->" + error);
-            return reject(responseDeliver(responseCode.FAIL, "error on insert charging station data", error))
+            handelErrorResponse(reject,error,"Error inserting station data")
+
+            // console.log("insert error --->" + error);
+            // return reject(responseDeliver(responseCode.FAIL, "error on insert charging station data", error))
         }
     })
 }
@@ -70,8 +72,10 @@ exports.insertChargingStation = (data) => {
             return resolve(responseDeliver(responseCode.SUCCESS, "Station Created Successfully !", "", result[0]))
 
         } catch (error) {
-            console.log("insert error --->" + error);
-            return reject(responseDeliver(responseCode.FAIL, "error on insert charging station data", error))
+            handelErrorResponse(reject,error,"Error inserting station data")
+
+            // console.log("insert error --->" + error);
+            // return reject(responseDeliver(responseCode.FAIL, "error on insert charging station data", error))
         }
     })
 }
@@ -110,8 +114,10 @@ exports.updateChargingStation = (data) => {
             return resolve(responseDeliver(responseCode.SUCCESS, "Station Updated Successfully !", "", result[0]))
 
         } catch (error) {
-            console.log("insert error --->" + error);
-            return reject(responseDeliver(responseCode.FAIL, "error on updating charging station data", error))
+            handelErrorResponse(reject,error,"Error updating station data")
+
+            // console.log("insert error --->" + error);
+            // return reject(responseDeliver(responseCode.FAIL, "error on updating charging station data", error))
         }
     })
 }
@@ -133,8 +139,10 @@ exports.getStationByCode=(data)=>{
             return resolve(responseDeliver(responseCode.SUCCESS, "Station Fetch Successfully !", "", result));
 
         }catch (e) {
-            console.log("getting error --->" + e);
-            return reject(responseDeliver(responseCode.FAIL, "error on getting charging station data", e));
+            handelErrorResponse(reject,e,"Error fetching station data")
+
+            // console.log("getting error --->" + e);
+            // return reject(responseDeliver(responseCode.FAIL, "error on getting charging station data", e));
 
         }
     })
@@ -156,8 +164,10 @@ exports.getStationByUser=(data)=>{
             return resolve(responseDeliver(responseCode.SUCCESS, "Station Fetch Successfully !", "", result))
 
         }catch (e) {
-            console.log("getting error --->" + e);
-            return reject(responseDeliver(responseCode.FAIL, "error on getting charging station data", e));
+            handelErrorResponse(reject,e,"Error getting station data")
+
+            // console.log("getting error --->" + e);
+            // return reject(responseDeliver(responseCode.FAIL, "error on getting charging station data", e));
         }
     });
 }
@@ -177,8 +187,10 @@ exports.getStationById=(data)=>{
             return resolve(responseDeliver(responseCode.SUCCESS, "Station Fetch Successfully !", "", result))
 
         }catch (e) {
-            console.log("getting error --->" + e);
-            return reject(responseDeliver(responseCode.FAIL, "error on getting charging station data", e));
+            handelErrorResponse(reject,e,"Error getting station data")
+
+            // console.log("getting error --->" + e);
+            // return reject(responseDeliver(responseCode.FAIL, "error on getting charging station data", e));
         }
     });
 }
@@ -198,8 +210,10 @@ exports.getStation=(data)=>{
                 return resolve(responseDeliver(responseCode.SUCCESS, "Station Fetch Successfully !", "", data));
             });
         }catch (e) {
-            console.log("getting error --->" + e);
-            return reject(responseDeliver(responseCode.FAIL, "error on getting charging station data", e));
+            handelErrorResponse(reject,e,"Error getting station data")
+
+            // console.log("getting error --->" + e);
+            // return reject(responseDeliver(responseCode.FAIL, "error on getting charging station data", e));
         }
     });
 }
@@ -221,8 +235,10 @@ exports.deleteStationById = (data) => {
 
             return resolve(responseDeliver(responseCode.SUCCESS, "Station deleted successfully", ""));
         } catch (error) {
-            console.log("Error deleting station: ", error);
-            return reject(responseDeliver(responseCode.FAIL, "Error deleting station", error));
+            handelErrorResponse(reject,error,"Error inserting station data")
+
+            // console.log("Error deleting station: ", error);
+            // return reject(responseDeliver(responseCode.FAIL, "Error deleting station", error));
         }
     });
 }
