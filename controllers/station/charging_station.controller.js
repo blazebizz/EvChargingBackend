@@ -112,7 +112,7 @@ exports.getChargingStations = (req, res) => {
                 res.status(200).json(responseDeliver(responseCode.SUCCESS, "Data fetched successfully", "", insertSuccessResp.data))
             } else {
                 console.log("Error while Inserting data , UserID : ", "userID")
-                res.status(400).json(responseDeliver(responseCode.INTERNAL_ERROR, "Something went wrong, Please try again !"))
+                res.status(400).json(responseDeliver(responseCode.FAIL, "Something went wrong, Please try again !"))
             }
         }).catch(() => {
         res.status(400).json(responseDeliver(responseCode.INTERNAL_ERROR, "Something went wrong, Please try again !"))
