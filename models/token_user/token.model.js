@@ -7,7 +7,7 @@ const {responseDeliver, handelErrorResponse, responseCode} = require("../../serv
 exports.fetchUser = (user_id) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let dataList = await pgClient(pgTables.users).where({ user_id });
+            let dataList = await pgClient(pgTables.users).where({user_id});
             return resolve(responseDeliver(200, "User data fetched successfully", "", dataList));
         } catch (error) {
             return reject(responseDeliver(400, "error on fetch partner data", error));
@@ -15,33 +15,33 @@ exports.fetchUser = (user_id) => {
     });
 };
 
-exports.fetchUserByType=(data)=>{
+exports.fetchUserByType = (data) => {
     let {
         user_type
     } = data
-    return new Promise(async  (resolve, reject)=>{
+    return new Promise(async (resolve, reject) => {
         try {
             pgClient(pgTables.users).where({user_type})
-                .then(response=>{
-                return resolve(responseDeliver(responseCode.SUCCESS, "Station Slot Fetch Successfully !", "", response));
-            }).catch(e=>{
-                handelErrorResponse(reject,e,"Error getting users by type data")
+                .then(response => {
+                    return resolve(responseDeliver(responseCode.SUCCESS, "Station Slot Fetch Successfully !", "", response));
+                }).catch(e => {
+                handelErrorResponse(reject, e, "Error getting users by type data")
             });
             // let response = pgClient(pgTables.users).where({userType})
             // return resolve(responseDeliver(responseCode.SUCCESS, "Users Fetch Successfully !", "", response));
-        }catch (e){
-            handelErrorResponse(reject,e,"Error getting users by type data")
+        } catch (e) {
+            handelErrorResponse(reject, e, "Error getting users by type data")
 
         }
     })
 }
 
-exports.createUser = (user_id, mobile_no, name,email) => {
+exports.createUser = (user_id, mobile_no, name, email) => {
     return new Promise(async (resolve, reject) => {
         try {
-           /* let created_at = moment()
-                .tz("Asia/Kolkata")
-                .format("yyyy-MM-DD hh:mm:sZ");*/
+            /* let created_at = moment()
+                 .tz("Asia/Kolkata")
+                 .format("yyyy-MM-DD hh:mm:sZ");*/
 
             await pgClient(pgTables.users).insert({
                 user_id,
@@ -64,9 +64,9 @@ exports.createUser = (user_id, mobile_no, name,email) => {
 
 
 //todo set pagination mechanism for this
-exports.fetchAllUser=()=>{
+exports.fetchAllUser = () => {
     console.log("calling fetch all user")
-    return new Promise(async  (resolve, reject)=>{
+    return new Promise(async (resolve, reject) => {
         try {
             pgClient(pgTables.users)
             const response = await pgClient(pgTables.users);
@@ -74,9 +74,28 @@ exports.fetchAllUser=()=>{
 
             // let response = pgClient(pgTables.users).where({userType})
             // return resolve(responseDeliver(responseCode.SUCCESS, "Users Fetch Successfully !", "", response));
-        }catch (e){
-            handelErrorResponse(reject,e,"Error getting all users data")
-
+        } catch (e) {
+            handelErrorResponse(reject, e, "Error getting all users data")
         }
     })
+}
+
+
+exports.changeUserAccess = (data) => {
+    console.log("changeUserAccess request ===> ", data);
+    let {
+        user_id,
+        is_allowed
+    } = data
+    return new Promise(async (resolve, reject) => {
+        pgClient(pgTables.users)
+            .where({user_id})
+            .update({is_allowed})
+            .returning("*")
+            .then(data => {
+                return resolve(responseDeliver(responseCode.SUCCESS, "User Access Updated Successfully !", "", data));
+            }).catch(e => {
+            handelErrorResponse(reject, e, "Error updating user access")
+        });
+    });
 }

@@ -26,27 +26,17 @@ exports.responseDeliver = (code, message, error = "", data = []) => {
     console.log("response_logger ==> ", {...response, error});
     return response
 }
+
 exports.handelErrorResponse = (reject, error, message) => {
     console.log("Getting Error ===>", error)
     if (error.code === 'ENOTFOUND') {
         return reject(this.responseDeliver(this.responseCode.INTERNAL_ERROR, "Unable to connect the database", error));
+    }if (error.code === 'ERR_UNHANDLED_REJECTION') {
+        return reject(this.responseDeliver(this.responseCode.INTERNAL_ERROR, "Data base operation error", error));
     } else
         return reject(this.responseDeliver(this.responseCode.FAIL, message, error));
-
 };
 
-
-exports.checkToken = (req,res)=>{
-    let verified = false
-    this.verifyToken(req,res).then(data=>{
-        verified =true
-        // res.status(200).json(this.responseDeliver(this.responseCode.SUCCESS,"Token verified","",data));
-    }).catch(error=>{
-        verified = false
-        res.status(401).json(this.responseDeliver(this.responseCode.FAIL,"Token verification Failed","",error));
-    });
-    return verified
-}
 
 exports.verifyToken = (req) => {
     return new Promise((resolve, reject) => {
@@ -58,11 +48,12 @@ exports.verifyToken = (req) => {
         jwt.verify(token, 'my-key', (err, decoded) => {
             if (err) {
                 console.error('JWT verification error:', err);
-                return reject(this.responseDeliver(this.responseCode.FAIL,"Token verification failed","",err));
+                return reject(err);
             } else {
-                const { userId } = decoded;
-                console.log('User ID:', userId);
-                return resolve(this.responseDeliver(this.responseCode.SUCCESS,"verified","",userId));
+                const { user_id } = decoded;
+                let res = this.responseDeliver(this.responseCode.SUCCESS,"verified","",user_id)
+                console.log("token verification response ===> ",res);
+                return resolve(res);
             }
         });
     });
