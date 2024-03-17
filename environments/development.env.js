@@ -5,7 +5,8 @@ exports.pg_config = {
     database: "postgres",
     port: 5432,
     host: "db.tecwsodqrfjplkxqrgti.supabase.co",
-    password: "8pRT2onRm8OsMPXS"
+    password: "8pRT2onRm8OsMPXS",
+    connectionString: "postgres://postgres.tecwsodqrfjplkxqrgti:8pRT2onRm8OsMPXS@aws-0-us-west-1.pooler.supabase.com:5432/postgres"
 }
 
 
