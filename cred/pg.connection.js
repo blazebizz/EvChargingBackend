@@ -10,14 +10,14 @@ const { pg_config } = require("./env");
 
 const _pgClient = require('knex')({
     client: 'pg',
-    connection: {
-        // connectionString: config.DATABASE_URL,
-        user: pg_config.user,
-        database: pg_config.database,
-        port: pg_config.port,
-        host: pg_config.host,
-        password: pg_config.password
-    },
+    connection: pg_config.connectionString,
+    // connection: {
+    //     user: pg_config.user,
+    //     database: pg_config.database,
+    //     port: pg_config.port,
+    //     host: pg_config.host,
+    //     password: pg_config.password
+    // },
     debug: true
 });
 
